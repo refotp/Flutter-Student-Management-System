@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "257434613492",
+    "project_id": "latis-education-84499",
+    "storage_bucket": "latis-education-84499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257434613492:android:7c379667e18593c5fd10a1",
+        "android_client_info": {
+          "package_name": "com.example.testlatisedu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgM3fWdU9VFfhsmBZjqlewRg1C4Jyeav4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
