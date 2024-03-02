@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:testlatisedu/app/controller/homepagecontroller.dart';
 import 'package:testlatisedu/app/screens/home/pages.dart';
@@ -18,13 +17,16 @@ class HomePage extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: InkWell(
-            child: Image.asset('assets/logo250x250.png'),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Image.asset('assets/logo3.png'),
+            ),
             onTap: () => controller.openDrawer(),
           ),
         ),
         centerTitle: true,
         title: const Text(
-          'LatisEdu',
+          'E-du',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:testlatisedu/app/controller/editstudentpagecontroller.dart';
 import 'package:testlatisedu/app/helper/validator.dart';
+import 'package:testlatisedu/app/screens/addstudents/imagebutton.dart';
+import 'package:testlatisedu/app/screens/addstudents/submitbutton.dart';
 import 'package:testlatisedu/app/screens/login/formspacing.dart';
 import 'package:testlatisedu/app/widgets/stylewidget.dart';
 
@@ -121,11 +122,10 @@ class EditStudentPage extends StatelessWidget {
                               dropdownMenuEntries: const <DropdownMenuEntry<
                                   String>>[
                                 DropdownMenuEntry(
-                                    value: 'latiseducation',
-                                    label: 'Latis Education'),
+                                    value: 'Reguler', label: 'Reguler'),
                                 DropdownMenuEntry(
-                                    value: 'tutorindonesia',
-                                    label: 'Tutor Indonesia'),
+                                    value: 'Internasional',
+                                    label: 'Internasional'),
                               ],
                             ),
                           ],
@@ -144,11 +144,15 @@ class EditStudentPage extends StatelessWidget {
             Container(
                 width: 200,
                 height: 200,
-                color: Colors.black,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'assets/e9fe822242176fae86a863e0d5228c4a.jpg'))),
                 child: Obx(() {
                   if (controller.pickedFile.value == null) {
                     return Image.network(
                       studentData['imageUrl'],
+                      fit: BoxFit.cover,
                     );
                   } else {
                     return Image.file(
@@ -169,100 +173,38 @@ class EditStudentPage extends StatelessWidget {
                     onTap: () async {
                       await controller.captureImageFromCamera();
                     },
-                    child: Container(
-                      width: 140.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.orange[800],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Icon(
-                              Iconsax.camera,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              'Kamera',
-                              style: globalTitle(16, Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
+                    child: const ImageButton(
+                      text: 'Kamera',
+                      icon: Iconsax.camera,
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      await controller.pickImageFromGallery();
-                    },
-                    child: Container(
-                      width: 140.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.orange[800],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Icon(
-                              Iconsax.gallery,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              'Galeri',
-                              style: globalTitle(16, Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                      onTap: () async {
+                        await controller.pickImageFromGallery();
+                      },
+                      child: const ImageButton(
+                        text: 'Galeri',
+                        icon: Iconsax.gallery,
+                      )),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: GestureDetector(
-                onTap: () {
-                  controller.updateStudentData(
-                      studentData.id,
-                      {
-                        'namaLengkap': controller.namaLengkap.text,
-                        'email': controller.email.text.trim(),
-                        'namaLembaga': controller.namaLembaga?.value ??
-                            studentData['namaLembaga']
-                      },
-                      controller.imageFile);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.orange[800],
-                  ),
-                  width: 160.w,
-                  child: const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
+                  onTap: () {
+                    controller.updateStudentData(
+                        studentData.id,
+                        {
+                          'namaLengkap': controller.namaLengkap.text,
+                          'email': controller.email.text.trim(),
+                          'namaLembaga': controller.namaLembaga.value
+                        },
+                        controller.imageFile);
+                  },
+                  child: const SubmitButton(
+                    text: 'Submit',
+                  )),
             ),
           ],
         ),

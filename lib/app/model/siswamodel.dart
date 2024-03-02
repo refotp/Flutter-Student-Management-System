@@ -1,6 +1,6 @@
 class SiswaModel {
   final String id;
-  final String nisn;
+  final int nisn;
   final String namaLengkap;
   final String email;
   final String namaLembaga;

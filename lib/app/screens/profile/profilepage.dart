@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testlatisedu/app/widgets/stylewidget.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -8,17 +9,19 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), color: Colors.black),
-            child: Image.asset(
-              'assets/fotoku.jpg',
-              width: 240,
-              height: 240,
-              fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: SizedBox.fromSize(
+              size: const Size.fromRadius(100),
+              child: Image.asset('assets/fotoku.jpg', fit: BoxFit.cover),
             ),
-          )
+          ),
+          Text(
+            'Name : Refo Tri Putra',
+            style: globalTitle(14, Colors.black),
+          ),
         ],
       )),
     );

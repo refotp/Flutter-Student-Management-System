@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:testlatisedu/app/data/authenticationrepository.dart';
 import 'package:testlatisedu/app/data/userrepository.dart';
+import 'package:testlatisedu/app/helper/firebaseerror.dart';
 import 'package:testlatisedu/app/model/usermodel.dart';
-import 'package:testlatisedu/app/screens/home/homepage.dart';
 
 class SignUpPageController extends GetxController {
   static SignUpPageController get instance => Get.find();
@@ -35,10 +36,13 @@ class SignUpPageController extends GetxController {
         );
         final userRepository = Get.put(UserRepository());
         await userRepository.saveUserData(newUser);
-        Get.offAll(() => const HomePage());
       }
-    } catch (e) {
-      print(e);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-exists') {
+        AuthErrorHandling.emailAlreadyExist();
+      }
+    } finally {
+      AuthenticationRepository.instance.pindahHalaman();
     }
   }
 

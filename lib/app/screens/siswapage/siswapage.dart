@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:testlatisedu/app/controller/siswapagecontroller.dart';
 import 'package:testlatisedu/app/editstudent/editstudentpage.dart';
 import 'package:testlatisedu/app/screens/addstudents/addstudentpage.dart';
+import 'package:testlatisedu/app/widgets/stylewidget.dart';
 
 class SiswaPage extends StatelessWidget {
   const SiswaPage({super.key});
@@ -16,12 +18,12 @@ class SiswaPage extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
-              .collection('students')
+              .collection('Students')
               .orderBy('nisn', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -33,45 +35,62 @@ class SiswaPage extends StatelessWidget {
             }
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(
-                child: Text('Tidak ada data siswa.'),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/Animation - 1708943744059.json',
+                      frameRate: const FrameRate(29.99)),
+                  Text('Tidak ada data siswa',
+                      style: globalSubTitle(18, Colors.black))
+                ],
               );
             }
 
             return Column(children: [
-              TextField(
-                onChanged: (query) {
-                  if (query.trim().isNotEmpty) {
-                    controller.searchStudents(query);
-                  } else {
-                    controller.fetchStudents();
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search by name...',
-                  prefixIcon: Icon(Icons.search),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                child: TextField(
+                  onChanged: (query) {
+                    if (query.trim().isNotEmpty) {
+                      controller.searchStudents(query);
+                    } else {
+                      controller.fetchStudents();
+                    }
+                  },
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    icon: Icon(
+                      Iconsax.search_normal,
+                      color: Color.fromARGB(255, 192, 115, 0),
+                    ),
+                    hintText: 'Nama siswa atau jenis kelas',
+                  ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Daftar siswa',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     IconButton(
-                      icon: Icon(Icons.more_vert),
-                      onPressed: () {},
+                      icon: const Icon(Iconsax.document_download),
+                      onPressed: () {
+                        controller.generatePDF(context, controller.students);
+                      },
                     ),
                   ],
                 ),
               ),
               Expanded(child: Obx(() {
                 if (controller.students.isEmpty) {
-                  return Center(
+                  return const Center(
                     child: Text('No students found.'),
                   );
                 }
@@ -84,7 +103,7 @@ class SiswaPage extends StatelessWidget {
                         color: Colors.orange[50],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
@@ -100,19 +119,20 @@ class SiswaPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     studentData['namaLengkap'],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        overflow: TextOverflow.ellipsis),
+                                    maxLines: 2,
                                   ),
-                                  SizedBox(height: 4),
+                                  const SizedBox(height: 4),
                                   Text(
                                     studentData['namaLembaga'],
                                     style: TextStyle(
@@ -138,30 +158,24 @@ class SiswaPage extends StatelessWidget {
                                   children: [
                                     TextButton(
                                         onPressed: () {
-                                          print(studentData.data());
-                                          Get.to(EditStudentPage(
-                                            studentData: studentData,
-                                          ));
+                                          Get.to(() => EditStudentPage(
+                                                studentData: studentData,
+                                              ));
                                         },
-                                        child: Text('Edit')),
+                                        child: const Text('Edit')),
                                     TextButton(
                                         onPressed: () {
                                           FirebaseFirestore.instance
-                                              .collection('students')
+                                              .collection('Students')
                                               .doc(studentData.id)
                                               .delete()
-                                              .then((_) {
-                                            print(
-                                                'Data siswa berhasil dihapus');
-                                          }).catchError((error) {
-                                            print(
-                                                'Error saat menghapus data siswa: $error');
-                                          });
+                                              .then((_) {})
+                                              .catchError((error) {});
                                         },
-                                        child: Text('Delete')),
+                                        child: const Text('Delete')),
                                   ],
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                               ],
                             ),
                           ],

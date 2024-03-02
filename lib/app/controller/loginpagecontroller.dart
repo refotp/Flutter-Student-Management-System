@@ -20,7 +20,7 @@ class LoginPageController extends GetxController {
         return;
       } else {
         openDialig();
-        final userCredential = await AuthenticationRepository.instance
+        await AuthenticationRepository.instance
             .logIn(emailController.text.trim(), passwordController.text.trim());
 
         Get.offAll(() => const HomePage());

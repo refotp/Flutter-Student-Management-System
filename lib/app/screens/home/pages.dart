@@ -22,7 +22,7 @@ class Pages extends StatelessWidget {
             builder: (context, child) {
               switch (controller.selectedIndex) {
                 case 0:
-                  return const ProfilePage();
+                  return const SiswaPage();
                 case 1:
                   return const ProfilePage();
                 case 2:

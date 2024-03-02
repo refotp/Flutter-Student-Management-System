@@ -6,9 +6,9 @@ import 'package:testlatisedu/app/myapp.dart';
 import 'package:testlatisedu/firebase_options.dart';
 
 void main() async {
-  final WidgetsBinding widgetsBinding =
-      WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((FirebaseApp value) => Get.put(AuthenticationRepository()));
+
   runApp(const MyApp());
 }

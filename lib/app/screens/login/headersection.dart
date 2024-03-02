@@ -16,7 +16,7 @@ class HeaderSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Image.asset(
-          'assets/logo250x250.png',
+          'assets/logo3.png',
           width: 120.w,
           height: 120.h,
         ),

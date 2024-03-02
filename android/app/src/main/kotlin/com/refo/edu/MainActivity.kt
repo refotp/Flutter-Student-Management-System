@@ -1,4 +1,4 @@
-package com.example.testlatisedu
+package com.refo.edu
 
 import io.flutter.embedding.android.FlutterActivity
 

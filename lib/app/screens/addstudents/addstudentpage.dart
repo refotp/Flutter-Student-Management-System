@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:testlatisedu/app/controller/addstudentpagecontroller.dart';
 import 'package:testlatisedu/app/helper/validator.dart';
+import 'package:testlatisedu/app/screens/addstudents/imagebutton.dart';
+import 'package:testlatisedu/app/screens/addstudents/submitbutton.dart';
 import 'package:testlatisedu/app/screens/login/formspacing.dart';
 import 'package:testlatisedu/app/widgets/stylewidget.dart';
 
@@ -109,17 +111,16 @@ class AddStudentPage extends StatelessWidget {
                                   surfaceTintColor:
                                       MaterialStatePropertyAll(Colors.white)),
                               label: Text(
-                                'Nama lembaga',
+                                'Jenis kelas',
                                 style: globalSubTitle(14, Colors.black),
                               ),
                               dropdownMenuEntries: const <DropdownMenuEntry<
                                   String>>[
                                 DropdownMenuEntry(
-                                    value: 'latiseducation',
-                                    label: 'Latis Education'),
+                                    value: 'Reguler', label: 'Reguler'),
                                 DropdownMenuEntry(
-                                    value: 'tutorindonesia',
-                                    label: 'Tutor Indonesia'),
+                                    value: 'Internasional',
+                                    label: 'Internasional'),
                               ],
                             ),
                           ],
@@ -156,68 +157,19 @@ class AddStudentPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () async {
-                      await controller.captureImageFromCamera();
-                    },
-                    child: Container(
-                      width: 140.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.orange[800],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Icon(
-                              Iconsax.camera,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              'Kamera',
-                              style: globalTitle(16, Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                      onTap: () async {
+                        await controller.captureImageFromCamera();
+                      },
+                      child: const ImageButton(
+                        text: 'Kamera',
+                        icon: Iconsax.camera,
+                      )),
                   GestureDetector(
                     onTap: () async {
                       await controller.pickImageFromGallery();
                     },
-                    child: Container(
-                      width: 140.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.orange[800],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Icon(
-                              Iconsax.gallery,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              'Galeri',
-                              style: globalTitle(16, Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    child: const ImageButton(
+                        text: 'Galeri', icon: Iconsax.gallery),
                   ),
                 ],
               ),
@@ -228,22 +180,7 @@ class AddStudentPage extends StatelessWidget {
                 onTap: () {
                   controller.saveStudentData();
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.orange[800],
-                  ),
-                  width: 160.w,
-                  child: const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+                child: const SubmitButton(text: 'Submit'),
               ),
             ),
           ],
